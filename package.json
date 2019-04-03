@@ -1,0 +1,19 @@
+{
+  "name": "nodesocket",
+  "version": "1.0.0",
+  "description": "NodeJs and Socket.io",
+  "main": "index.js",
+  "scripts": {
+    "start":"node server/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Amrutham",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^7.0.0",
+    "express": "^4.16.4"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.10"
+  }
+}
