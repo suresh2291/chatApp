@@ -1,11 +1,50 @@
-const path = require('path')
-console.log(require('dotenv').config({path: path.join(__dirname, '../.env')}))//.env
-const express =  require('express')
-var app = express()
-const publicPath = path.join(__dirname, '../public')
-app.use(express.static(publicPath))
-const port = process.env.PORT;
-console.log(port)
-app.listen(port,()=>{
-    console.log('listening to port ', port)
+const path = require('path');
+const http = require('http');
+const express = require('express');
+const socketIO = require('socket.io');
+
+const publicPath = path.join(__dirname, '../public');
+const port = process.env.PORT || 3000;
+var app = express();
+var server = http.createServer(app);
+var io = socketIO(server);
+
+app.use(express.static(publicPath));
+
+io.on('connection', (socket) => {
+  console.log('New user connected');
+//Admin welcome message
+socket.emit('newMessage',{
+    from:'Admin',
+    text:'Welcome to chat App',
+    createdAt: new Date().getTime()
 })
+socket.broadcast.emit('newMessage',{
+    from:'Admin',
+    text:'A new User Joined',
+    createdAt: new Date().getTime()
+})
+  socket.on('createMessage', (message) => {
+    console.log('createMessage', message);
+    //io.emit() will show messages to everyone
+    io.emit('newMessage', {
+      from: message.from,
+      text: message.text,
+      createdAt: new Date().getTime()
+    });
+    // socket.broadcast.emit('newMessage', {
+    //     from: message.from,
+    //     text: message.text,
+    //     createdAt: new Date().getTime()
+    //   });
+//broadcast message,will show to everone except the sending user
+  });
+
+  socket.on('disconnect', () => {
+    console.log('User was disconnected');
+  });
+});
+
+server.listen(port, () => {
+  console.log(`Server is up on ${port}`);
+});
