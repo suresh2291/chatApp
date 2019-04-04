@@ -1,18 +1,24 @@
-<!doctype html>
+<!DOCTYPE html>
 
-<html lang="en">
+<html>
+
 <head>
   <meta charset="utf-8">
-
-  <title>Node Chat App</title>
-
 </head>
 
 <body>
-  <h1>A sample Chat App using Node</h1>
+  <p>Welcome to the chat app</p>
+
+  <ol id="messages"></ol>
+
+  <form id="message-form">
+    <input name="message" type="text" placeholder="Message"/>
+    <button>Send</button>
+  </form>
+
   <script src="/socket.io/socket.io.js"></script>
-  <script src="/js/htmlsocket.js">
-  //  Basic Client Server Connect and Disconnect
-  </script>
+  <script src="/js/libs/jquery-3.1.0.min.js"></script>
+  <script src="/js/index.js"></script>
 </body>
+
 </html>
